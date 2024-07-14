@@ -1,4 +1,6 @@
 import 'package:amcart/constants/global_variables.dart';
+import 'package:amcart/features/auth/screens/auth_screen.dart';
+import 'package:amcart/router.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,6 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'AmCart',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         scaffoldBackgroundColor: GlobalVariables.backgroundColor,
         colorScheme: const ColorScheme.light(
@@ -24,24 +27,9 @@ class MyApp extends StatelessWidget {
             color: Colors.black,
           ),
         ),
-        useMaterial3: true,
       ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text("AmCart"),
-        ),
-        body: Column(
-          children: [
-            const Center(
-              child: Text("Hello, world!"),
-            ),
-            ElevatedButton(
-              onPressed: () {},
-              child: const Text("Button"),
-            )
-          ],
-        ),
-      ),
+      onGenerateRoute: (routeSettings) => genrateRoute(routeSettings),
+      home: const AuthScreen(),
     );
   }
 }
