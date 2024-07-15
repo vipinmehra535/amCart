@@ -1,7 +1,13 @@
 const express = require("express");
 const mongoose = require("mongoose");
+
+const router = require("./routes/auth");
+
 const PORT = 8000;
 const app = express();
+app.use(express.json());
+
+app.use("/", router);
 
 const DB =
   "mongodb+srv://vipin:9999855768@mongodb.rcpk4rc.mongodb.net/?retryWrites=true&w=majority&appName=Mongodb";
