@@ -1,4 +1,3 @@
-import 'package:amcart/constants/global_variables.dart';
 import 'package:flutter/material.dart';
 
 class CustomButton extends StatefulWidget {

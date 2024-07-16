@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 
 const router = require("./routes/auth");
 
-const PORT = 8000;
+const PORT = 5000;
 const app = express();
 app.use(express.json());
 

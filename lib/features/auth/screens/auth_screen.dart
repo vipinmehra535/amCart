@@ -1,6 +1,7 @@
 import 'package:amcart/common/widgets/custom_button.dart';
 import 'package:amcart/common/widgets/custom_textfield.dart';
 import 'package:amcart/constants/global_variables.dart';
+import 'package:amcart/features/auth/services/auth_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -22,17 +23,26 @@ class _AuthScreenState extends State<AuthScreen> {
   Auth _auth = Auth.signup;
   final _signUpFormKey = GlobalKey<FormState>();
   final _signInFormKey = GlobalKey<FormState>();
+  final AuthService authService = AuthService();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
 
   @override
   void dispose() {
-    // TODO: implement dispose
     _emailController.dispose();
     _passwordController.dispose();
     _nameController.dispose();
     super.dispose();
+  }
+
+  void signUpUser() {
+    authService.signUp(
+      context: context,
+      name: _nameController.text,
+      email: _emailController.text,
+      password: _passwordController.text,
+    );
   }
 
   @override
@@ -98,7 +108,13 @@ class _AuthScreenState extends State<AuthScreen> {
                         const SizedBox(height: 10),
                         CustomButton(
                           text: 'SignUp',
-                          onTap: () {},
+                          onTap: () {
+                            print('User Created ');
+                            if (_signUpFormKey.currentState!.validate()) {
+                              print('User Created ');
+                              signUpUser();
+                            }
+                          },
                         )
                       ],
                     ),

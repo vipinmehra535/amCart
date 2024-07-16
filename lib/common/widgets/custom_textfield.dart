@@ -1,6 +1,8 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 
-class CustomTextfield extends StatefulWidget {
+class CustomTextfield extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
 
@@ -8,16 +10,11 @@ class CustomTextfield extends StatefulWidget {
       {super.key, required this.controller, required this.hintText});
 
   @override
-  State<CustomTextfield> createState() => _CustomTextfieldState();
-}
-
-class _CustomTextfieldState extends State<CustomTextfield> {
-  @override
   Widget build(BuildContext context) {
     return TextFormField(
-      controller: widget.controller,
+      controller: controller,
       decoration: InputDecoration(
-        hintText: widget.hintText,
+        hintText: hintText,
         border: OutlineInputBorder(
             borderSide: BorderSide(
           color: Colors.black38,
@@ -27,6 +24,12 @@ class _CustomTextfieldState extends State<CustomTextfield> {
           color: Colors.black38,
         )),
       ),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Please your $hintText';
+        }
+        return null;
+      },
     );
   }
 }
