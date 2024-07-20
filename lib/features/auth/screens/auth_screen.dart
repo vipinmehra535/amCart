@@ -2,7 +2,6 @@ import 'package:amcart/common/widgets/custom_button.dart';
 import 'package:amcart/common/widgets/custom_textfield.dart';
 import 'package:amcart/constants/global_variables.dart';
 import 'package:amcart/features/auth/services/auth_service.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 enum Auth {
