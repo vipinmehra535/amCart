@@ -3,9 +3,13 @@ import 'dart:convert';
 import 'package:amcart/constants/error_handling.dart';
 import 'package:amcart/constants/global_variables.dart';
 import 'package:amcart/constants/utlis.dart';
+import 'package:amcart/features/home/screens/home_screen.dart';
 import 'package:amcart/models/user.dart';
+import 'package:amcart/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {
   void signUp({
@@ -70,7 +74,20 @@ class AuthService {
         httpErrorHandle(
           response: res,
           context: context,
-          onSuccess: () {},
+          onSuccess: () async {
+            SharedPreferences prefs = await SharedPreferences.getInstance();
+            if (!context.mounted) return;
+            Provider.of<UserProvider>(context, listen: false).setUser(res.body);
+            await prefs.setString(
+                'x-auth-token', jsonDecode(res.body)['token']);
+            if (!context.mounted) return;
+
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              HomeScreen.routeName,
+              (route) => false,
+            );
+          },
         );
       } else {
         return;

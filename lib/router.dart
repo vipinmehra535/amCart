@@ -1,4 +1,5 @@
 import 'package:amcart/features/auth/screens/auth_screen.dart';
+import 'package:amcart/features/home/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
 Route<dynamic> genrateRoute(RouteSettings routeSettings) {
@@ -6,6 +7,11 @@ Route<dynamic> genrateRoute(RouteSettings routeSettings) {
     case AuthScreen.routeName:
       return MaterialPageRoute(
         builder: (context) => const AuthScreen(),
+      );
+
+    case HomeScreen.routeName:
+      return MaterialPageRoute(
+        builder: (context) => const HomeScreen(),
       );
 
     default:
