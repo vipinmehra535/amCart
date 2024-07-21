@@ -50,4 +50,18 @@ authRouter.post("/api/login", async (req, res) => {
   }
 });
 
+authRouter.post("/api/tokenIsValid", async (req, res) => {
+  try {
+    const token = req.header("x-auth-token");
+    if (!token) return res.json(false);
+    const verified = jwt.verify(token, "passwordKey");
+    if (!verified) return res.json(false);
+    const user = await User.findById(verified.id);
+    if (!user) return res.json(false);
+    return res.json(true);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 module.exports = authRouter;

@@ -1,5 +1,6 @@
 import 'package:amcart/constants/global_variables.dart';
 import 'package:amcart/features/auth/screens/auth_screen.dart';
+import 'package:amcart/features/auth/services/auth_service.dart';
 import 'package:amcart/providers/user_provider.dart';
 import 'package:amcart/router.dart';
 import 'package:flutter/material.dart';
@@ -16,8 +17,21 @@ void main() {
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final AuthService authService = AuthService();
+
+  @override
+  void initState() {
+    super.initState();
+    authService.getUserData(context);
+  }
 
   // This widget is the root of your application.
   @override
