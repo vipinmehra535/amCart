@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
-    minlength: [6, "Please enter a long password"],
+    minlength: [7, "Please enter a longer password"], // Ensure minlength is set to 7
   },
   address: {
     type: String,
@@ -30,5 +30,6 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-const User = mongoose.model("users", userSchema);
+const User = mongoose.model("User", userSchema); // Use singular form for model name
+
 module.exports = User;
