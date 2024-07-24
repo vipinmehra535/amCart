@@ -31,7 +31,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    // authService.getUserData(context);
+    authService.getUserData(context);
   }
 
   // This widget is the root of your application.
@@ -53,7 +53,9 @@ class _MyAppState extends State<MyApp> {
           ),
           useMaterial3: false),
       onGenerateRoute: (routeSettings) => genrateRoute(routeSettings),
-      home: AuthScreen(),
+      home: Provider.of<UserProvider>(context).user.token.isNotEmpty
+          ? const HomeScreen()
+          : const AuthScreen(),
     );
   }
 }
