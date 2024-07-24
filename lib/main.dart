@@ -1,6 +1,7 @@
 import 'package:amcart/constants/global_variables.dart';
 import 'package:amcart/features/auth/screens/auth_screen.dart';
 import 'package:amcart/features/auth/services/auth_service.dart';
+import 'package:amcart/features/home/screens/home_screen.dart';
 import 'package:amcart/providers/user_provider.dart';
 import 'package:amcart/router.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +31,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    authService.getUserData(context);
+    // authService.getUserData(context);
   }
 
   // This widget is the root of your application.
@@ -52,7 +53,7 @@ class _MyAppState extends State<MyApp> {
           ),
           useMaterial3: false),
       onGenerateRoute: (routeSettings) => genrateRoute(routeSettings),
-      home: const AuthScreen(),
+      home: AuthScreen(),
     );
   }
 }
