@@ -1,5 +1,8 @@
 import 'package:amcart/constants/global_variables.dart';
+import 'package:amcart/features/account/screens/account_screen.dart';
+import 'package:amcart/features/home/screens/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:badges/badges.dart' as badges;
 
 class BottomBar extends StatefulWidget {
   static const String routeName = '/actual-home';
@@ -10,18 +13,32 @@ class BottomBar extends StatefulWidget {
 }
 
 class _BottomBarState extends State<BottomBar> {
-  final int _page = 0;
+  int _page = 0;
   double bottomNavigationBarWidth = 42;
   double bottomBarBorderWidth = 5;
+
+  List<Widget> pages = [
+    const HomeScreen(),
+    const AccountScreen(),
+    const Center(child: Text("Cart Screen")),
+  ];
+  void updatepage(value) {
+    setState(() {
+      _page = value;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      body: pages[_page],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _page,
         selectedItemColor: GlobalVariables.selectedNavBarColor,
         unselectedItemColor: GlobalVariables.unselectedNavBarColor,
         backgroundColor: GlobalVariables.backgroundColor,
         iconSize: 28,
+        onTap: updatepage,
         items: [
           BottomNavigationBarItem(
             icon: Container(
@@ -58,19 +75,27 @@ class _BottomBarState extends State<BottomBar> {
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: Container(
-              width: bottomNavigationBarWidth,
-              decoration: BoxDecoration(
-                border: Border(
-                  top: BorderSide(
-                    color: _page == 2
-                        ? GlobalVariables.selectedNavBarColor
-                        : GlobalVariables.backgroundColor,
-                    width: bottomBarBorderWidth,
+            icon: badges.Badge(
+              showBadge: true,
+              badgeStyle: const badges.BadgeStyle(
+                elevation: 0,
+                badgeColor: Colors.white,
+              ),
+              badgeContent: const Text('2'),
+              child: Container(
+                width: bottomNavigationBarWidth,
+                decoration: BoxDecoration(
+                  border: Border(
+                    top: BorderSide(
+                      color: _page == 2
+                          ? GlobalVariables.selectedNavBarColor
+                          : GlobalVariables.backgroundColor,
+                      width: bottomBarBorderWidth,
+                    ),
                   ),
                 ),
+                child: const Icon(Icons.shopping_cart_outlined),
               ),
-              child: const Icon(Icons.home_outlined),
             ),
             label: '',
           ),
