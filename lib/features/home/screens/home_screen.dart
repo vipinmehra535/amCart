@@ -15,6 +15,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context).user;
     return Scaffold(
+      backgroundColor: Colors.pink,
       body: Center(child: Text("Home Screen ${user.name}")),
     );
   }

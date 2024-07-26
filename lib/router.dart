@@ -1,3 +1,4 @@
+import 'package:amcart/common/widgets/bottom_bar.dart';
 import 'package:amcart/features/auth/screens/auth_screen.dart';
 import 'package:amcart/features/home/screens/home_screen.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,10 @@ Route<dynamic> genrateRoute(RouteSettings routeSettings) {
     case HomeScreen.routeName:
       return MaterialPageRoute(
         builder: (context) => const HomeScreen(),
+      );
+    case BottomBar.routeName:
+      return MaterialPageRoute(
+        builder: (context) => const BottomBar(),
       );
 
     default:

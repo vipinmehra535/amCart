@@ -1,7 +1,7 @@
+import 'package:amcart/common/widgets/bottom_bar.dart';
 import 'package:amcart/constants/global_variables.dart';
 import 'package:amcart/features/auth/screens/auth_screen.dart';
 import 'package:amcart/features/auth/services/auth_service.dart';
-import 'package:amcart/features/home/screens/home_screen.dart';
 import 'package:amcart/providers/user_provider.dart';
 import 'package:amcart/router.dart';
 import 'package:flutter/material.dart';
@@ -54,7 +54,7 @@ class _MyAppState extends State<MyApp> {
           useMaterial3: false),
       onGenerateRoute: (routeSettings) => genrateRoute(routeSettings),
       home: Provider.of<UserProvider>(context).user.token.isNotEmpty
-          ? const HomeScreen()
+          ? const BottomBar()
           : const AuthScreen(),
     );
   }

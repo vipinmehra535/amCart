@@ -1,11 +1,12 @@
 import 'dart:convert';
 
+import 'package:amcart/common/widgets/bottom_bar.dart';
 import 'package:amcart/constants/error_handling.dart';
 import 'package:amcart/constants/global_variables.dart';
 import 'package:amcart/constants/utlis.dart';
-import 'package:amcart/features/home/screens/home_screen.dart';
 import 'package:amcart/models/user.dart';
 import 'package:amcart/providers/user_provider.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
@@ -49,7 +50,9 @@ class AuthService {
       } else {
         return;
       }
-      print(res.body);
+      if (kDebugMode) {
+        print(res.body);
+      }
     } catch (e) {
       showSnackBar(context, e.toString());
     }
@@ -69,7 +72,9 @@ class AuthService {
         },
       );
 
-      print(res.body);
+      if (kDebugMode) {
+        print(res.body);
+      }
       if (context.mounted) {
         httpErrorHandle(
           response: res,
@@ -84,7 +89,7 @@ class AuthService {
 
             Navigator.pushNamedAndRemoveUntil(
               context,
-              HomeScreen.routeName,
+              BottomBar.routeName,
               (route) => false,
             );
           },
@@ -127,11 +132,13 @@ class AuthService {
             'x-auth-token': token
           },
         );
+        if (!context.mounted) return;
 
         var userProvider = Provider.of<UserProvider>(context, listen: false);
         userProvider.setUser(userRes.body);
       }
     } catch (e) {
+      if (!context.mounted) return;
       showSnackBar(context, e.toString());
     }
   }
