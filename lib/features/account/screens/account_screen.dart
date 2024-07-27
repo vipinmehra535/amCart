@@ -1,5 +1,6 @@
 import 'package:amcart/constants/global_variables.dart';
 import 'package:amcart/features/account/widgets/below_app_bar.dart';
+import 'package:amcart/features/account/widgets/orders.dart';
 import 'package:amcart/features/account/widgets/top_bottoms.dart';
 import 'package:flutter/material.dart';
 
@@ -51,6 +52,7 @@ class AccountScreen extends StatelessWidget {
           SizedBox(height: 10),
           TopBottoms(),
           SizedBox(height: 20),
+          Orders(),
         ],
       ),
     );
