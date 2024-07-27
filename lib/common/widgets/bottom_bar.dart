@@ -79,7 +79,7 @@ class _BottomBarState extends State<BottomBar> {
               showBadge: true,
               badgeStyle: const badges.BadgeStyle(
                 elevation: 0,
-                badgeColor: Colors.white,
+                badgeColor: GlobalVariables.greyBackgroundColor,
               ),
               badgeContent: const Text('2'),
               child: Container(
