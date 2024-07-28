@@ -22,6 +22,10 @@ class CarouselImage extends StatelessWidget {
       options: CarouselOptions(
         viewportFraction: 1,
         height: 200,
+        autoPlay: true,
+        autoPlayInterval: const Duration(seconds: 4),
+        autoPlayAnimationDuration: const Duration(seconds: 1),
+        autoPlayCurve: Curves.easeOutBack,
       ),
     );
   }
