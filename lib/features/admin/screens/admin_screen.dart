@@ -1,4 +1,5 @@
 import 'package:amcart/constants/global_variables.dart';
+import 'package:amcart/features/admin/screens/posts_screen.dart';
 import 'package:flutter/material.dart';
 
 class AdminScreen extends StatefulWidget {
@@ -14,7 +15,7 @@ class _AdminScreenState extends State<AdminScreen> {
   double bottomBarBorderWidth = 5;
 
   List<Widget> pages = [
-    const Center(child: Text("Home Screen")),
+    const PostsScreen(),
     const Center(child: Text("Home Screen")),
     const Center(child: Text("Cart Screen")),
   ];
