@@ -1,9 +1,14 @@
 import 'dart:io';
 
+import 'package:amcart/constants/error_handling.dart';
+import 'package:amcart/constants/global_variables.dart';
 import 'package:amcart/constants/utlis.dart';
 import 'package:amcart/models/product.dart';
+import 'package:amcart/providers/user_provider.dart';
 import 'package:cloudinary_public/cloudinary_public.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 class AdminServices {
   void sellProducts({
@@ -15,6 +20,7 @@ class AdminServices {
     required String category,
     required List<File> images,
   }) async {
+    final user = Provider.of<UserProvider>(context, listen: false);
     try {
       final cloudinary = CloudinaryPublic('dwqjuckio', 'mvk6zkky');
       List<String> imageUrls = [];
@@ -24,16 +30,31 @@ class AdminServices {
           CloudinaryFile.fromFile(images[i].path, folder: name),
         );
         imageUrls.add(res.secureUrl);
-
-        Product product = Product(
-          name: name,
-          description: description,
-          quantity: quantity,
-          images: imageUrls,
-          category: category,
-          price: price,
-        );
       }
+      Product product = Product(
+        name: name,
+        description: description,
+        quantity: quantity,
+        images: imageUrls,
+        category: category,
+        price: price,
+      );
+      http.Response res = await http.post(
+        Uri.parse("$uri/admin/add-product"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': user.user.token,
+        },
+        body: product.toJson(),
+      );
+      if (!context.mounted) return;
+      httpErrorHandle(
+          response: res,
+          context: context,
+          onSuccess: () {
+            showSnackBar(context, 'Product Added Successfully');
+            Navigator.pop(context);
+          });
     } catch (e) {
       if (!context.mounted) return;
       showSnackBar(context, e.toString());

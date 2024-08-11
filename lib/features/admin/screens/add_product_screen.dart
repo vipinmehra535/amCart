@@ -4,6 +4,7 @@ import 'package:amcart/common/widgets/custom_button.dart';
 import 'package:amcart/common/widgets/custom_textfield.dart';
 import 'package:amcart/constants/global_variables.dart';
 import 'package:amcart/constants/utlis.dart';
+import 'package:amcart/features/admin/services/admin_services.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
@@ -21,10 +22,27 @@ class _AddProductScreenState extends State<AddProductScreen> {
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
   final TextEditingController quantityNameController = TextEditingController();
+  final AdminServices adminServices = AdminServices();
+
+  final _addProductFormKey = GlobalKey<FormState>();
 
   String category = 'Mobiles';
 
   List<File> images = [];
+
+  void sellProducts() {
+    if (_addProductFormKey.currentState!.validate() && images.isNotEmpty) {
+      adminServices.sellProducts(
+        context: context,
+        name: productNameController.text,
+        description: descriptionController.text,
+        price: double.parse(priceController.text),
+        quantity: double.parse(quantityNameController.text),
+        category: category,
+        images: images,
+      );
+    }
+  }
 
   @override
   void dispose() {
@@ -73,6 +91,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
       ),
       body: SingleChildScrollView(
         child: Form(
+          key: _addProductFormKey,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
             child: Column(
@@ -174,7 +193,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 const SizedBox(height: 50),
                 CustomButton(
                   text: 'Sell',
-                  onTap: () {},
+                  onTap: sellProducts,
                 ),
               ],
             ),
