@@ -20,7 +20,8 @@ class SingleProduct extends StatelessWidget {
           child: Image.network(
             image,
             fit: BoxFit.fitHeight,
-            width: 180,
+            width: 180
+            ,
           ),
         ),
       ),

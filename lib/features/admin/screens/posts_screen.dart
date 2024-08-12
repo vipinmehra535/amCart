@@ -1,3 +1,4 @@
+import 'package:amcart/common/widgets/loader.dart';
 import 'package:amcart/features/admin/services/admin_services.dart';
 import 'package:amcart/models/product.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +34,7 @@ class _PostsScreenState extends State<PostsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: products == null
-          ? const Center(child: CircularProgressIndicator())
+          ? const Loader()
           : GridView.builder(
               itemCount: products!.length,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -41,6 +42,7 @@ class _PostsScreenState extends State<PostsScreen> {
               ),
               itemBuilder: (context, index) {
                 final product = products![index];
+                
               }),
       floatingActionButton: FloatingActionButton(
         onPressed: navigateToAddProduct,
