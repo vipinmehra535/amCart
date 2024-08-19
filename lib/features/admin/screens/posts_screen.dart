@@ -20,11 +20,26 @@ class _PostsScreenState extends State<PostsScreen> {
   void initState() {
     super.initState();
     fetchAllProducts();
+
   }
 
   void fetchAllProducts() async {
-    products = await adminServices.fetchAllProducts(context);
+    products = await adminServices.fetchAllProducts(
+      context: context,
+     
+    );
     setState(() {});
+  }
+
+  void deleteProducts(Product product, int index) {
+    adminServices.deleteProducts(
+      context: context,
+      product: product,
+      onSuccess: () {
+        products!.removeAt(index);
+        setState(() {});
+      },
+    );
   }
 
   void navigateToAddProduct() {
@@ -46,10 +61,10 @@ class _PostsScreenState extends State<PostsScreen> {
                 return Column(
                   children: [
                     SizedBox(
-                        child: SingleProduct(
-                          image: product.images[0],
-                        ),
-                        ),
+                      child: SingleProduct(
+                        image: product.images[0],
+                      ),
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -61,7 +76,7 @@ class _PostsScreenState extends State<PostsScreen> {
                           ),
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () => deleteProducts(product, index),
                           icon: const Icon(Icons.delete),
                         )
                       ],

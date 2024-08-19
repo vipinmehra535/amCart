@@ -22,7 +22,9 @@ Route<dynamic> genrateRoute(RouteSettings routeSettings) {
 
     case AddProductScreen.routeName:
       return MaterialPageRoute(
-        builder: (context) => const AddProductScreen(),
+        builder: (context) => const AddProductScreen(
+           
+        ),
       );
 
     default:

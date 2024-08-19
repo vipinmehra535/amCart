@@ -20,6 +20,7 @@ class AdminServices {
     required double quantity,
     required String category,
     required List<File> images,
+    required VoidCallback onSuccess,
   }) async {
     final user = Provider.of<UserProvider>(context, listen: false);
     try {
@@ -54,16 +55,18 @@ class AdminServices {
           context: context,
           onSuccess: () {
             showSnackBar(context, 'Product Added Successfully');
+            onSuccess();
             Navigator.pop(context);
           });
     } catch (e) {
-      if (!context.mounted) return;
       showSnackBar(context, e.toString());
     }
   }
 
   // get all the products
-  Future<List<Product>> fetchAllProducts(BuildContext context) async {
+  Future<List<Product>> fetchAllProducts({
+    required BuildContext context,
+  }) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     List<Product> productList = [];
     try {
@@ -72,26 +75,57 @@ class AdminServices {
         'Content-Type': 'application/json; charset=UTF-8',
         'x-auth-token': userProvider.user.token,
       });
-      print(res.body);
-      httpErrorHandle(
-        response: res,
-        context: context,
-        onSuccess: () {
-          for (int i = 0; i < jsonDecode(res.body).length; i++) {
-            productList.add(
-              Product.fromJson(
-                jsonEncode(
-                  jsonDecode(res.body)[i],
+
+      if (context.mounted) {
+        httpErrorHandle(
+          response: res,
+          context: context,
+          onSuccess: () {
+            for (int i = 0; i < jsonDecode(res.body).length; i++) {
+              productList.add(
+                Product.fromJson(
+                  jsonEncode(
+                    jsonDecode(res.body)[i],
+                  ),
                 ),
-              ),
-            );
-          }
-        },
-      );
+              );
+            }
+          },
+        );
+      }
     } catch (e) {
-      print(e.toString());
-      showSnackBar(context, e.toString());
+      if (context.mounted) {
+        showSnackBar(context, e.toString());
+      }
     }
     return productList;
+  }
+
+  void deleteProducts({
+    required BuildContext context,
+    required Product product,
+    required VoidCallback onSuccess,
+  }) async {
+    final user = Provider.of<UserProvider>(context, listen: false);
+    try {
+      http.Response res =
+          await http.post(Uri.parse("$uri/admin/delete-product"),
+              headers: <String, String>{
+                'Content-Type': 'application/json; charset=UTF-8',
+                'x-auth-token': user.user.token,
+              },
+              body: jsonEncode({
+                'id': product.id,
+              }));
+      if (!context.mounted) return;
+      httpErrorHandle(
+          response: res,
+          context: context,
+          onSuccess: () {
+            onSuccess();
+          });
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
   }
 }
