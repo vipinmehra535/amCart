@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 
 class AddProductScreen extends StatefulWidget {
   static const String routeName = '/add-product';
+
   const AddProductScreen({super.key});
 
   @override
@@ -98,27 +99,32 @@ class _AddProductScreenState extends State<AddProductScreen> {
               children: [
                 const SizedBox(height: 20),
                 images.isNotEmpty
-                    ? CarouselSlider(
-                        items: images.map(
-                          (i) {
-                            return Builder(
-                              builder: (BuildContext context) => Image.file(
-                                i,
-                                fit: BoxFit.cover,
-                                height: 200,
-                              ),
-                            );
-                          },
-                        ).toList(),
-                        options: CarouselOptions(
-                          viewportFraction: 1,
-                          height: 200,
-                          autoPlay: true,
-                          autoPlayInterval: const Duration(seconds: 4),
-                          autoPlayAnimationDuration: const Duration(seconds: 1),
-                          autoPlayCurve: Curves.easeOutBack,
-                        ),
-                      )
+                    ? images.length > 1
+                        ? CarouselSlider(
+                            items: images.map((i) {
+                              return Builder(
+                                builder: (BuildContext context) => Image.file(
+                                  i,
+                                  fit: BoxFit.cover,
+                                  height: 200,
+                                ),
+                              );
+                            }).toList(),
+                            options: CarouselOptions(
+                              viewportFraction: 1,
+                              height: 200,
+                              autoPlay: true,
+                              autoPlayInterval: const Duration(seconds: 4),
+                              autoPlayAnimationDuration:
+                                  const Duration(seconds: 1),
+                              autoPlayCurve: Curves.easeOutBack,
+                            ),
+                          )
+                        : Image.file(
+                            images[0],
+                            fit: BoxFit.cover,
+                            height: 200,
+                          )
                     : GestureDetector(
                         onTap: selectImages,
                         child: DottedBorder(
