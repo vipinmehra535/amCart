@@ -1,6 +1,7 @@
 import 'package:amcart/common/widgets/bottom_bar.dart';
 import 'package:amcart/features/admin/screens/add_product_screen.dart';
 import 'package:amcart/features/auth/screens/auth_screen.dart';
+import 'package:amcart/features/home/screens/categorey_deal_screen.dart';
 import 'package:amcart/features/home/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -19,12 +20,17 @@ Route<dynamic> genrateRoute(RouteSettings routeSettings) {
       return MaterialPageRoute(
         builder: (context) => const BottomBar(),
       );
+    case CategoreyDealScreen.routeName:
+      var category = routeSettings.arguments as String;
+      return MaterialPageRoute(
+        builder: (context) => CategoreyDealScreen(
+          category: category,
+        ),
+      );
 
     case AddProductScreen.routeName:
       return MaterialPageRoute(
-        builder: (context) => const AddProductScreen(
-           
-        ),
+        builder: (context) => const AddProductScreen(),
       );
 
     default:
