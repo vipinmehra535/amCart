@@ -36,6 +36,6 @@ const productSchema = new mongoose.Schema({
   },
 });
 
-const Product = mongoose.model("product", productSchema); // Use singular form for model name
+const Product = mongoose.model("product", productSchema);
 
 module.exports = Product;
